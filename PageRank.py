@@ -13,10 +13,15 @@ def page_rank(graph, s, err):
             for j in range(matrix.indptr[i], matrix.indptr[i + 1]):
                 matrix.data[j] /= col_sum[i]
 
+    res_matrix = matrix.todense()
+
+    # create original rj
     ro = r = np.ones(n) / n
 
     loop = True
     iteration_count = 0
+
+    # start to converge
     while loop:
         iteration_count += 1
 
@@ -31,24 +36,27 @@ def page_rank(graph, s, err):
 
         ro = r
 
-    return r, iteration_count
+    return res_matrix, r, iteration_count
 
 
 if __name__ == '__main__':
 
+    # read from file
     a = np.loadtxt('Matrix.txt')
     max_val = int(a.max())
 
     b = np.zeros([max_val, max_val])
 
+    # create matrix based on the input file
     for i in range(0, len(a)):
         b[a[i][1] - 1][a[i][0] - 1] = a[i][2]
     G = b
 
     res = page_rank(G, .85, .00001)
 
+    # output
     print "\nResult of file \"Matrix.txt\":"
-    print "(a) Matrix M: \n", G
+    print "(a) Matrix M: \n", res[0]
     print "(b) The original rank vector (rj): ", np.ones(max_val) / max_val
-    print "(c) The Converged rank vector (R): ", res[0]
-    print "(d) Iteration = ", res[1]
+    print "(c) The Converged rank vector (R): ", res[1]
+    print "(d) Iteration = ", res[2]
