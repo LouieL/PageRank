@@ -16,7 +16,7 @@ def page_rank(graph, s, err):
     res_matrix = matrix.todense()
 
     # create original rj
-    ro = r = np.ones(n) / n
+    r_original = ro = r = np.ones(n) / n
 
     loop = True
     iteration_count = 0
@@ -36,7 +36,7 @@ def page_rank(graph, s, err):
 
         ro = r
 
-    return res_matrix, r, iteration_count
+    return res_matrix, r_original, r, iteration_count
 
 
 if __name__ == '__main__':
@@ -57,6 +57,6 @@ if __name__ == '__main__':
     # output
     print "\nResult of file \"Matrix.txt\":"
     print "(a) Matrix M: \n", res[0]
-    print "(b) The original rank vector (rj): ", np.ones(max_val) / max_val
-    print "(c) The Converged rank vector (R): ", res[1]
-    print "(d) Iteration = ", res[2]
+    print "(b) The original rank vector (rj): ", res[1]
+    print "(c) The Converged rank vector (R): ", res[2]
+    print "(d) Iteration = ", res[3]
